@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PwDevIoc
 {
     /// <summary>
-    /// 实例类型
+    /// 生命周期类型
     /// </summary>
     public enum LifeTimeType
     {

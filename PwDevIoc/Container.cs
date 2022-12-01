@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PwDevIoc
 {
+    /// <summary>
+    /// Ioc容器
+    /// </summary>
     public class Container : IContainer
     {
         private IServiceCollection _services;
@@ -26,6 +29,12 @@ namespace PwDevIoc
             return Get<TService>();
         }
 
+        /// <summary>
+        /// 转换类型
+        /// </summary>
+        /// <typeparam name="TService"></typeparam>
+        /// <param name="instance"></param>
+        /// <returns></returns>
         private static TService CastInstance<TService>(object instance)
         {
             try

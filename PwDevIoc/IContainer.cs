@@ -16,7 +16,7 @@ namespace PwDevIoc
         TService Get<TService>(string tag = "");
 
         /// <summary>
-        /// 从上下文中检索服务
+        /// 从上下文中检索服务（学习autofac，功能跟Get一样^_^）
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>

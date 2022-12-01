@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace PwDevIoc
 {
+    /// <summary>
+    /// 服务描述类
+    /// </summary>
     public class ServiceDescriptor
     {
+        /// <summary>
+        /// 唯一标识
+        /// </summary>
         public string Id { get; set; }
-
+        /// <summary>
+        /// 输入的标识
+        /// </summary>
         public string Tag { get; set; }
 
         /// <summary>
@@ -56,7 +64,10 @@ namespace PwDevIoc
 
         }
 
-
+        /// <summary>
+        /// 获取服务实例
+        /// </summary>
+        /// <returns></returns>
         public object GetService()
         {
             switch (ServiceType)
@@ -72,6 +83,11 @@ namespace PwDevIoc
             }
         }
 
+        /// <summary>
+        /// 创建实例
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private object CreateInstance(Type type)
         {
             return System.Activator.CreateInstance(type);

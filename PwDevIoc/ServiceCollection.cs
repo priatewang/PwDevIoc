@@ -8,8 +8,14 @@ using System.Threading.Tasks;
 
 namespace PwDevIoc
 {
+    /// <summary>
+    /// 服务集合实现类
+    /// </summary>
     public class ServiceCollection : IServiceCollection
     {
+        /// <summary>
+        /// 服务键值对 key：ServiceDescriptor中的Id（source类型的Name+Tag）
+        /// </summary>
         private Dictionary<string, ServiceDescriptor> _descriptors = new Dictionary<string, ServiceDescriptor>();
 
         public ServiceDescriptor this[string index]
