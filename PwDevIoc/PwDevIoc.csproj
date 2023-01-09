@@ -2,6 +2,26 @@
 
   <PropertyGroup>
     <TargetFrameworks>net45;net5.0;net6.0</TargetFrameworks>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
+    <RepositoryUrl></RepositoryUrl>
+    <PackageTags>Ioc</PackageTags>
+    <Version>1.0.1.0</Version>
+    <Authors>Piratewang</Authors>
+    <Company>CompanyPiratewang</Company>
+    <Description>my ioc container</Description>
+    <Copyright>Copyright ©  2022</Copyright>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>https://github.com/priatewang/PwDevIoc</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>False</PackageRequireLicenseAcceptance>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>

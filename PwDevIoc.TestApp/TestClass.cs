@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PwDevIoc.TestApp
 {
+ 
     internal class TestClass : IService
     {
         public void Send(string msg)
@@ -25,14 +26,14 @@ namespace PwDevIoc.TestApp
         }
     }
 
-
+    [AutoIoc(Mode = LifeTimeType.Singleton, RelationClassType = typeof(TestClass))]
     internal interface IService
     {
         void Send(string msg);
     }
 
 
-
+    [AutoIoc]
     internal class User
     {
         public string Name { get; set; }

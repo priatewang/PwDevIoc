@@ -45,6 +45,61 @@ namespace PwDevIoc
         }
 
 
+        /// <summary>
+        /// 自动加载程序集中需要注册的对象
+        /// </summary>
+        public void AutoRegisterIoc()
+        {
+            var assembies = AppDomain.CurrentDomain.GetAssemblies();
+
+            foreach (var item in assembies)
+            {
+                ///跳过系统程序集
+                if (item.FullName.Contains("System"))
+                {
+                    continue;
+                }
+                var types = item.GetTypes();
+
+                Func<Attribute[], bool> IsHaveAutoIocAttribute = o =>
+                {
+                    foreach (Attribute attribute in o)
+                    {
+                        if (attribute is AutoIocAttribute)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                };
+
+                foreach (var it in types)
+                {
+                    if (IsHaveAutoIocAttribute(Attribute.GetCustomAttributes(it, true)))
+                    {
+                        //处理ioc自动注册
+                        AutoIocAttribute attribute = (AutoIocAttribute)Attribute.GetCustomAttribute(it, typeof(AutoIocAttribute));
+                        if (attribute.RelationClassType == null)
+                        {
+                            serviceDescriptors.Add(new ServiceDescriptor(it, attribute.Mode));
+                        }
+                        else
+                        {
+                            serviceDescriptors.Add(new ServiceDescriptor(it, attribute.RelationClassType, attribute.Mode));
+                          
+                        }
+
+
+                    }
+
+                }
+
+
+
+            }
+        }
+
+
 
         public IContainer Build()
         {

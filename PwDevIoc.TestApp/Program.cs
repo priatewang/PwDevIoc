@@ -9,10 +9,10 @@ namespace PwDevIoc.TestApp
             Console.WriteLine("Hello World!");
             ContainerBuilder builder = new ContainerBuilder();
 
-            builder.RegisterType<User>();
-            builder.RegisterType<IService, TestClass>(LifeTimeType.Singleton);
+            //builder.RegisterType<User>();
+            // builder.RegisterType<IService, TestClass>(LifeTimeType.Singleton);
             //builder.RegisterType<IService, MyClass>("my");
-
+            builder.AutoRegisterIoc();
             var container= builder.Build();
 
             var user = container.Get<User>();
