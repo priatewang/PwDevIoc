@@ -40,6 +40,13 @@ namespace PwDevIoc
         /// </summary>
         public object Instance { get; set; }
 
+        private ConstructorModel Default=null;
+
+        /// <summary>
+        /// 构造方法属性集合
+        /// </summary>
+        internal List<ConstructorModel> Constructors { get; set; }
+
 
         public ServiceDescriptor(Type type, LifeTimeType iocType = LifeTimeType.Normal)
           : this(type, type, iocType)
@@ -62,6 +69,7 @@ namespace PwDevIoc
             Tag = tag;
             Id = source.Name + tag;
 
+            InitConstructorModels();
         }
 
         /// <summary>
@@ -92,6 +100,30 @@ namespace PwDevIoc
         {
             return System.Activator.CreateInstance(type);
         }
+
+        private void InitConstructorModels()
+        {
+            Constructors = new List<ConstructorModel>();
+            var infos = TargetService.GetConstructors();
+            foreach ( var info in infos)
+            {
+                var paramters= info.GetParameters();
+                ConstructorModel model = new ConstructorModel()
+                {
+                    Info = info,
+                    Order = paramters.Length,
+                    Parameters = paramters,
+                };
+                Constructors.Add(model);
+            }
+        }
+
+        public object GetServiceDI()
+        {
+
+            return null;
+        }
+
 
     }
 }
