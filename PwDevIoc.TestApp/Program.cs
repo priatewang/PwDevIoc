@@ -27,11 +27,12 @@ namespace PwDevIoc.TestApp
 
             Console.WriteLine("-----单例-----");
 
-
-
-
             Console.WriteLine(service.GetHashCode());
             Console.WriteLine(service2.GetHashCode());
+
+            Console.WriteLine("----注入---");
+
+            user.ServiceSend("成功");
 
             Console.ReadKey();
         }

@@ -37,6 +37,17 @@ namespace PwDevIoc.TestApp
     internal class User
     {
         public string Name { get; set; }
+        IService _service { get; set; }
+
+        public User(IService service)
+        {
+            _service=service;
+        }
+
+        public void ServiceSend(string msg)
+        {
+            _service.Send(msg);
+        }
 
 
         public void UsePhoneSend(string name, string msg)

@@ -86,7 +86,7 @@ namespace PwDevIoc
                         else
                         {
                             serviceDescriptors.Add(new ServiceDescriptor(it, attribute.RelationClassType, attribute.Mode));
-                          
+
                         }
 
 
@@ -103,6 +103,28 @@ namespace PwDevIoc
 
         public IContainer Build()
         {
+            foreach (var item in serviceDescriptors)
+            {
+                foreach (var it in item.Constructors)
+                {
+                    bool isDefault = item.Default == null;
+                    foreach (var info in it.Parameters)
+                    {
+                        var descriptor = serviceDescriptors.First(x => x.Source == info.ParameterType);
+                        if (descriptor == null)
+                        {
+                            isDefault = false;
+                            continue;
+                        }
+                        item.DependServices.AddWithout(descriptor);
+                    }
+                    if (isDefault)
+                    {
+                        item.Default = it;
+                    }
+                }
+            }
+
             return new Container(serviceDescriptors);
 
         }

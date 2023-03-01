@@ -40,12 +40,17 @@ namespace PwDevIoc
         /// </summary>
         public object Instance { get; set; }
 
-        private ConstructorModel Default=null;
+        internal ConstructorModel Default = null;
 
         /// <summary>
         /// 构造方法属性集合
         /// </summary>
         internal List<ConstructorModel> Constructors { get; set; }
+
+        /// <summary>
+        /// 依赖或者需要注入的服务对象
+        /// </summary>
+        internal List<ServiceDescriptor> DependServices { get; set; }
 
 
         public ServiceDescriptor(Type type, LifeTimeType iocType = LifeTimeType.Normal)
@@ -91,6 +96,9 @@ namespace PwDevIoc
             }
         }
 
+
+
+
         /// <summary>
         /// 创建实例
         /// </summary>
@@ -98,16 +106,27 @@ namespace PwDevIoc
         /// <returns></returns>
         private object CreateInstance(Type type)
         {
-            return System.Activator.CreateInstance(type);
+            if (Default == null)
+                return System.Activator.CreateInstance(type);
+            List<object> paramters = new List<object>();
+            foreach (var item in Default.Parameters)
+            {
+                var service = DependServices.Find(w => w.Source == item.ParameterType);
+                if (service == null)
+                    return System.Activator.CreateInstance(type);
+                paramters.Add(service.GetService());
+            }
+            return Default.Info.Invoke(paramters.ToArray());
         }
 
         private void InitConstructorModels()
         {
             Constructors = new List<ConstructorModel>();
+            DependServices = new List<ServiceDescriptor>();
             var infos = TargetService.GetConstructors();
-            foreach ( var info in infos)
+            foreach (var info in infos)
             {
-                var paramters= info.GetParameters();
+                var paramters = info.GetParameters();
                 ConstructorModel model = new ConstructorModel()
                 {
                     Info = info,
@@ -116,6 +135,7 @@ namespace PwDevIoc
                 };
                 Constructors.Add(model);
             }
+            Constructors.Sort((x, y) => -x.Order.CompareTo(y.Order));
         }
 
         public object GetServiceDI()
