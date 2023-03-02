@@ -9,16 +9,22 @@ namespace PwDevIoc
 {
     internal class ConstructorModel
     {
-        public ConstructorModel() { }
+        internal ConstructorModel() { }
 
+        /// <summary>
+        /// 构造方法Info
+        /// </summary>
+        internal ConstructorInfo Info { get; set; }
 
-        public ConstructorInfo Info { get; set; }
+        /// <summary>
+        /// 排序标记（参数个数）
+        /// </summary>
+        internal int Order { get; set; }
 
-        public int Order { get; set; }
-
+        /// <summary>
+        /// 参数集合
+        /// </summary>
         internal ParameterInfo[] Parameters { get; set; }
-
-        internal object[] values { get; set; }
 
     }
 }

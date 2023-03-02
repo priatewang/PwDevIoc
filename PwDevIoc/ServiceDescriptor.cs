@@ -40,6 +40,9 @@ namespace PwDevIoc
         /// </summary>
         public object Instance { get; set; }
 
+        /// <summary>
+        /// 默认使用的构造方法
+        /// </summary>
         internal ConstructorModel Default = null;
 
         /// <summary>
@@ -119,6 +122,9 @@ namespace PwDevIoc
             return Default.Info.Invoke(paramters.ToArray());
         }
 
+        /// <summary>
+        /// 构造方法信息初始化
+        /// </summary>
         private void InitConstructorModels()
         {
             Constructors = new List<ConstructorModel>();
@@ -135,13 +141,8 @@ namespace PwDevIoc
                 };
                 Constructors.Add(model);
             }
+            //根据参数多少进行降序排序，尽可能多的注入已经注册的接口和服务
             Constructors.Sort((x, y) => -x.Order.CompareTo(y.Order));
-        }
-
-        public object GetServiceDI()
-        {
-
-            return null;
         }
 
 
