@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PwDevIoc
 {
-    public class AutoIocAttribute : Attribute
+    public class AutoServiceAttribute : Attribute
     {
         /// <summary>
         /// 生命周期类型
@@ -16,21 +16,22 @@ namespace PwDevIoc
         /// <summary>
         /// 接口服务对应实现类
         /// </summary>
-        public Type RelationClassType { get; set; }
+        public Type InterfaceType { get; set; }
 
-        public AutoIocAttribute()
+        public AutoServiceAttribute()
         {
+
 
         }
 
-        public AutoIocAttribute(LifeTimeType mode = LifeTimeType.Normal)
+        public AutoServiceAttribute(LifeTimeType mode = LifeTimeType.Transient)
         {
             Mode = mode;
         }
 
-        public AutoIocAttribute(Type type, LifeTimeType mode = LifeTimeType.Normal)
+        public AutoServiceAttribute(Type type, LifeTimeType mode = LifeTimeType.Transient)
         {
-            RelationClassType = type;
+            InterfaceType = type;
             Mode = mode;
         }
     }

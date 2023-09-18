@@ -56,7 +56,7 @@ namespace PwDevIoc
         internal List<ServiceDescriptor> DependServices { get; set; }
 
 
-        public ServiceDescriptor(Type type, LifeTimeType iocType = LifeTimeType.Normal)
+        public ServiceDescriptor(Type type, LifeTimeType iocType = LifeTimeType.Transient)
           : this(type, type, iocType)
         {
 
@@ -69,7 +69,7 @@ namespace PwDevIoc
         /// <param name="target"></param>
         /// <param name="id"></param>
         /// <param name="iocType"></param>
-        public ServiceDescriptor(Type source, Type target, LifeTimeType iocType = LifeTimeType.Normal, string tag = "")
+        public ServiceDescriptor(Type source, Type target, LifeTimeType iocType = LifeTimeType.Transient, string tag = "")
         {
             Source = source;
             TargetService = target;
@@ -88,7 +88,7 @@ namespace PwDevIoc
         {
             switch (ServiceType)
             {
-                case LifeTimeType.Normal:
+                case LifeTimeType.Transient:
                     return CreateInstance(TargetService);
                 case LifeTimeType.Singleton:
                     if (Instance == null)

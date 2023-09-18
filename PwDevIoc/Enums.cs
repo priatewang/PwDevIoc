@@ -14,7 +14,7 @@ namespace PwDevIoc
         /// <summary>
         /// 正常模式,多例
         /// </summary>
-        Normal,
+        Transient,
         /// <summary>
         /// 单例模式
         /// </summary>

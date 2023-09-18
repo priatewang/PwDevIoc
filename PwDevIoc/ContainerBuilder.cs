@@ -16,7 +16,7 @@ namespace PwDevIoc
         IServiceCollection serviceDescriptors;
 
 
-        public void RegisterType<TService>(LifeTimeType type = LifeTimeType.Normal) where TService : class
+        public void RegisterType<TService>(LifeTimeType type = LifeTimeType.Transient) where TService : class
         {
             serviceDescriptors.Add(new ServiceDescriptor(typeof(TService), type));
         }
@@ -28,7 +28,7 @@ namespace PwDevIoc
         /// <typeparam name="TService">目标类型（类）</typeparam>
         /// <param name="tag">标记</param>
         /// <param name="type"></param>
-        public void RegisterType<IService, TService>(string tag, LifeTimeType type = LifeTimeType.Normal) where TService : class
+        public void RegisterType<IService, TService>(string tag, LifeTimeType type = LifeTimeType.Transient) where TService : class
         {
             serviceDescriptors.Add(new ServiceDescriptor(typeof(IService), typeof(TService), type, tag));
         }
@@ -39,7 +39,7 @@ namespace PwDevIoc
         /// <typeparam name="IService">源类型（接口）</typeparam>
         /// <typeparam name="TService">目标类型（类）</typeparam>
         /// <param name="type"></param>
-        public void RegisterType<IService, TService>(LifeTimeType type = LifeTimeType.Normal) where TService : class
+        public void RegisterType<IService, TService>(LifeTimeType type = LifeTimeType.Transient) where TService : class
         {
             serviceDescriptors.Add(new ServiceDescriptor(typeof(IService), typeof(TService), type));
         }
@@ -65,7 +65,7 @@ namespace PwDevIoc
                 {
                     foreach (Attribute attribute in o)
                     {
-                        if (attribute is AutoIocAttribute)
+                        if (attribute is AutoServiceAttribute)
                         {
                             return true;
                         }
@@ -78,14 +78,14 @@ namespace PwDevIoc
                     if (IsHaveAutoIocAttribute(Attribute.GetCustomAttributes(it, true)))
                     {
                         //处理ioc自动注册
-                        AutoIocAttribute attribute = (AutoIocAttribute)Attribute.GetCustomAttribute(it, typeof(AutoIocAttribute));
-                        if (attribute.RelationClassType == null)
+                        AutoServiceAttribute attribute = (AutoServiceAttribute)Attribute.GetCustomAttribute(it, typeof(AutoServiceAttribute));
+                        if (attribute.InterfaceType == null)
                         {
                             serviceDescriptors.Add(new ServiceDescriptor(it, attribute.Mode));
                         }
                         else
                         {
-                            serviceDescriptors.Add(new ServiceDescriptor(it, attribute.RelationClassType, attribute.Mode));
+                            serviceDescriptors.Add(new ServiceDescriptor(attribute.InterfaceType, it,  attribute.Mode));
 
                         }
 
